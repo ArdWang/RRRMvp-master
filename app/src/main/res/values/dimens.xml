@@ -1,0 +1,53 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!--bUtton-->
+    <dimen name="login_button">57dp</dimen>
+    <dimen name="login_textsize">16sp</dimen>
+    <!--共有样式-->
+    <dimen name="magin_20">20dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+    <dimen name="padding_5">5dp</dimen>
+    <dimen name="padding_0">0dp</dimen>
+    <dimen name="zero_dp">0dp</dimen>
+    <dimen name="dp_50">50dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_15">15dp</dimen>
+    <dimen name="dp_0">0dp</dimen>
+    <dimen name="dp_40">40dp</dimen>
+    <dimen name="dp_45">45dp</dimen>
+    <dimen name="sp_16">16sp</dimen>
+    <dimen name="dp_pont_5">0.5dp</dimen>
+    <dimen name="dp_5">5dp</dimen>
+
+    <dimen name="load_more_footer_height_classic">60dp</dimen>
+    <dimen name="refresh_header_height">80dp</dimen>
+    <dimen name="load_more_footer_height">60dp</dimen>
+
+    <!-- google -->
+    <dimen name="refresh_header_height_google">100dp</dimen>
+    <dimen name="refresh_trigger_offset_google">100dp</dimen>
+    <dimen name="refresh_final_offset_google">150dp</dimen>
+    <dimen name="refresh_drawable_size_google">40dp</dimen>
+
+    <dimen name="load_more_footer_height_google">72dp</dimen>
+    <dimen name="load_more_trigger_offset_google">88dp</dimen>
+    <dimen name="load_more_final_offset_google">120dp</dimen>
+    <dimen name="load_more_drawable_size_google">36dp</dimen>
+
+    <!-- ==================Material样式日历对话框================== -->
+    <!-- 对话框整体的外边距（左右） -->
+    <dimen name="material_calendar_dialog_margin">30dp</dimen>
+    <!-- 对话框控件的内边距（上下） -->
+    <dimen name="material_calendar_dialog_paddingTB">15dp</dimen>
+    <!-- 对话框控件的内边距（左右） -->
+    <dimen name="material_calendar_dialog_paddingLR">20dp</dimen>
+
+    <!-- 对话框控件的年份文本大小 -->
+    <dimen name="material_calendar_dialog_year_textsize">18sp</dimen>
+    <!-- 对话框控件的月日星期文本大小 -->
+    <dimen name="material_calendar_dialog_monthday_textsize">26sp</dimen>
+
+</resources>

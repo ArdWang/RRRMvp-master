@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <!--黑色-->
+    <color name="colorBlck">#111111</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorRed">#DC143C</color>
+    <color name="colorGery">#555555</color>
+    <color name="colorBlue">#4876FF</color>
+    <color name="colorsBlue">#6495ED</color>
+    <color name="colorYellow">#B8860B</color>
+    <color name="colorYellows">#FFD700</color>
+
+    <color name="colorbGery">#E5E5E5</color>
+</resources>

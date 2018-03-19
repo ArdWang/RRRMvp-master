@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/login_main_layout"
+    >
+    <LinearLayout
+        android:id="@+id/mLbg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            >
+            <!--后期替换成图片-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:text="Express ERP"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_margin="20dp"
+            >
+            <TextView
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Login"
+                android:textSize="24sp"
+                />
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+               android:background="@drawable/linear_layout_bg"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:gravity="center_vertical"
+               >
+               <ImageView
+                   android:layout_marginStart="20dp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/username"
+                   />
+               <EditText
+                   android:id="@+id/mUser"
+                   android:layout_marginEnd="30dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="50dp"
+                   android:background="@null"
+                   android:hint="UserName"
+                   android:textStyle="bold"
+                   android:textAlignment="center"
+                   android:textColor="@color/colorGery"
+                   />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:background="@drawable/linear_layout_bg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                >
+                <ImageView
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/password"
+                    />
+                <EditText
+                    android:id="@+id/mPwd"
+                    android:layout_marginEnd="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:hint="Password"
+                    android:textStyle="bold"
+                    android:inputType="textPassword"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorGery"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:paddingStart="90dp"
+            android:paddingEnd="90dp"
+            >
+            <Button
+                android:id="@+id/mLogin"
+                android:text="Login"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@drawable/button_bg"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

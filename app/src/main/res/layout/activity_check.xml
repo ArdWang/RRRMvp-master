@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--添加头部-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/head_common_layout"/>
+    </LinearLayout>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/check_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabIndicatorHeight="3dp"
+        app:tabIndicatorColor="@color/colorBlue"
+        app:tabSelectedTextColor="@color/colorsBlue"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"
+        app:tabTextColor="@color/colorBlck"/>
+    <View
+        android:visibility="gone"
+        android:layout_marginTop="0dp"
+        android:layout_width="match_parent"
+        android:background="@color/colorGery"
+        android:layout_height="0.5dp"/>
+
+    <!--可滑动的布局内容-->
+    <com.ee.project.utils.view.NoScrollViewPager
+        android:layout_marginTop="2dp"
+        android:id="@+id/check_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

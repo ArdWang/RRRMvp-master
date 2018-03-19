@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+        <ImageView
+            android:id="@+id/mOpImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/lone"
+            />
+        <TextView
+            android:id="@+id/mOpTitle"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorGery"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:text="审查"
+            />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="swipe_load_more_footer"/>
+    <item type="id" name="swipe_target"/>
+    <item type="id" name="swipe_refresh_header"/>
+</resources>

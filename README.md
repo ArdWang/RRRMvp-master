@@ -50,4 +50,298 @@ dependencies {
 }  
 
 ```
+还需要添加以下的配置<br/>
+项目->build
+```Java
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+着手网络层 <br/>
+首先要配置Reftrofit ：
+```Java
+public class RetrofitServiceManager {
+    private static final int DEFAULT_TIME_OUT = 20;//超时时间 20s
+    private static final int DEFAULT_READ_TIME_OUT = 30;
+    private Retrofit mRetrofit;
+
+    public RetrofitServiceManager(){
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.connectTimeout(DEFAULT_TIME_OUT, TimeUnit.SECONDS);
+        builder.writeTimeout(DEFAULT_READ_TIME_OUT,TimeUnit.SECONDS);
+        builder.readTimeout(DEFAULT_READ_TIME_OUT,TimeUnit.SECONDS);
+
+        //添加公共拦截参数
+        HttpCommonInterceptor commonInterceptor = new HttpCommonInterceptor.Builder()
+                .addHeaderParams("palthform","adnroid")
+                .addHeaderParams("userToken","12345678912")
+                .addHeaderParams("userId","123")
+                .build();
+
+        builder.addInterceptor(commonInterceptor);
+
+
+        mRetrofit = new Retrofit.Builder()
+                .client(builder.build())
+                //创建Rxjava2工厂
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                //创建Gson工厂
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(UrlConfig.BASEURL)
+                .build();
+
+    }
+
+    //单列模式
+    private static class SingletonHolder{
+        private static final RetrofitServiceManager INSTANCE = new RetrofitServiceManager();
+    }
+
+    /**
+     * 获取RetrofitServiceManager
+     * @return
+     */
+    public static RetrofitServiceManager getInstance(){
+        return SingletonHolder.INSTANCE;
+    }
+
+    /**
+     * 获取对应的Service
+     * @param service Service 的 class
+     * @param <T>
+     * @return
+     */
+    public <T> T  create(Class<T> service){
+        return mRetrofit.create(service);
+    }
+}
+```
+配置Rxjava2 公共装载 这里面compose就是用来管理
+```Java
+public class ObjectLoader {
+    protected <T> Observable<T> observeat(Observable<T> observable,LifecycleProvider<ActivityEvent> lifecycleProvider){
+        return observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                //绑定生命周期
+                .compose(lifecycleProvider.<T>bindToLifecycle())
+                .observeOn(AndroidSchedulers.mainThread()); //指定在主线程中
+    }
+
+    protected <T> Observable<T> observefg(Observable<T> observable, LifecycleProvider<FragmentEvent> lifecycleProvider){
+        return observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .compose(lifecycleProvider.<T>bindToLifecycle())
+                .observeOn(AndroidSchedulers.mainThread()); //指定在主线程中
+    }
+}
+
+```
+
+上面配置完成后方可以写代码MVP代码 <br/>
+MVP的写法有很多种，我也是参考泓洋大神的文章来写的，可能稍微有些改动。 <br/>
+谷歌官方的MVP感觉有点啰嗦所以取容易自己理解简单的方式来写。<br/>
+由于很多数据都是共用的 所以必须要建立base类<br/>
+Activity继承于RxAppCompatActivity<br/>
+```Java
+public class BaseActivity extends RxAppCompatActivity{
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+}
+```
+BaseMVP类
+```Java
+    public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActivity implements BaseView,
+        View.OnClickListener{
+
+    public P mPresenter;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        init();
+    }
+
+    protected void init(){
+        setContentView(getLayoutResID());
+        initView();
+        mPresenter = PMUtil.getT(this,0);
+
+        if(this instanceof BaseView){
+            mPresenter.setMV(this);
+        }
+    }
+
+    protected abstract int getLayoutResID();
+
+    protected void initView(){
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+}
+```
+建立BasePresenter
+```Java
+public class BasePresenter<V> {
+    protected V mView;
+
+    public void setMV(V v){
+        mView = v;
+    }
+
+}
+```
+建立BaseView层
+```Java
+public interface BaseView {
+    void showLoading();
+    void hideLoading();
+
+}
+```
+以登录为Demo<br/>
+
+LoginView层
+```Java
+public interface LoginView extends BaseView{
+    void loginSuccess(UserBean.UserBeanBean userBeanBean);
+    void loginError(String message);
+
+    String getUserName();
+    String getPassword();
+
+}
+```
+LoginPresenter
+```Java
+public class LoginPresenter extends BasePresenter<LoginView>{
+    private LoginLoader loginLoader;
+
+    public void login(LifecycleProvider<ActivityEvent> lifecycleProvider){
+        loginLoader = new LoginLoader();
+        Map<String,Object> params = new HashMap<>();
+        params.put("action","getUser");
+        params.put("username",mView.getUserName());
+        params.put("password",mView.getPassword());
+        //params.put("deviceinfo",deviceinfo);
+        //params.put("pushid","123321");
+
+        loginLoader.getLogin(params,lifecycleProvider).subscribe(new Observer<UserBean>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(UserBean userBean) {
+                if(userBean.getCode().equals("200")){
+                    mView.loginSuccess(userBean.getUserBean());
+                }else{
+                    mView.loginError("帐号或者密码错误！");
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mView.loginError("出现了错误");
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+}
+```
+
+LoginActivity
+```Java
+public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements LoginView{
+    private EditText mUser;
+    private EditText mPwd;
+    private Button mLogin;
+    //private LinearLayout mLbg;
+
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void initView() {
+        mUser = findViewById(R.id.mUser);
+        mPwd = findViewById(R.id.mPwd);
+        mLogin = findViewById(R.id.mLogin);
+        //mLbg = findViewById(R.id.mLbg);
+        //尽量暗一点
+        //mLbg.getBackground().setAlpha(50);
+        mLogin.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.mLogin:
+                mPresenter.login(this);
+                break;
+        }
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    public void loginSuccess(UserBean.UserBeanBean userBeanBean) {
+        if(userBeanBean!=null){
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void loginError(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public String getUserName() {
+        return mUser.getText().toString().trim();
+    }
+
+    @Override
+    public String getPassword() {
+        return mPwd.getText().toString().trim();
+    }
+}
+```
+
+以上代码只是一个简单的流程,具体过程看项目里面的代码。<br/>
+谢谢你的Star...
+
+
+
+
 

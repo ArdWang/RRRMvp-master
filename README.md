@@ -9,9 +9,9 @@
 2. Rxlifecycle是通过绑定生命周期的方式，解决内存泄漏的问题。<br/>
 ### 开始使用<br/>
 1. 首先要导入我们所需要的库 所使用的androidstudio版本是 3.0。<br/>
-2. rxlifecycle Github地址 最新的版本在这里找 https://github.com/trello/RxLifecycle。<br/>
-3. rxjava Github地址 最新版本 https://github.com/ReactiveX/RxJava。<br/>
-4. retrofit GitHub 版本 https://github.com/square/retrofit。<br/>
+2. rxlifecycle Github地址 最新的版本在这里找 https://github.com/trello/RxLifecycle <br/>
+3. rxjava Github地址 最新版本 https://github.com/ReactiveX/RxJava <br/>
+4. retrofit GitHub 版本 https://github.com/square/retrofit <br/>
 5. 导入库的结构如下所示：使用的rxjava版本与rxlifecycle版本必须要对应 1.0 配1.0的，2.0配2.0 
 不能把1.0的版本配置到2.0里面去。<br/>
 

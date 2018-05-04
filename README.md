@@ -1,5 +1,5 @@
 # RRRMvp-master
-## MVP+Retrofit2+Rxjava2+RxLifecycle2.0萌新文章<br/>
+## MVP+Retrofit2+Rxjava2+RxLifecycle2.0<br/>
 
 ### Rxjava2为什么会造成内存泄漏？<br/>
 一句话描述：使用RxJava发布一个 Subscribe（订阅）后，当页面被finish()，此时订阅逻辑还未完成，如果没有及时取消订阅，就会导致Activity/Fragment无法被回收，从而引发内存泄漏。
